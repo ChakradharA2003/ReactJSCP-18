@@ -1,4 +1,12 @@
 /* Write your code here. */
+.bg-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, #9796f0, #fbc7d4);
+  height: 100vh;
+}
 .won-result-card {
   background-color: #ffffff33;
   border: 1px solid #ffffff30;
@@ -52,4 +60,38 @@
   border-radius: 12px;
   cursor: pointer;
   outline: none;
+}
+* {
+  font-family: 'Roboto';
+}
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px 15px;
+  background-image: linear-gradient(to right, #9796f0, #fbc7d4);
+  align-self: flex-start;
+  width: 100%;
+  margin-top: 0px;
+}
+.emoji-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-left: 60px;
+}
+.nav-img {
+  height: 70px;
+  width: 70px;
+}
+.emoji-heading {
+  color: #ffffff;
+}
+.scores-container {
+  flex-direction: row;
+  justify-content: space-around;
+  margin-right: 60px;
+  display: none;
 }
