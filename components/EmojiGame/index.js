@@ -25,18 +25,26 @@ class EmojiGame extends Component {
     displayEmojis: true,
   }
 
-  finishGameAndDisplayView = score => <WinOrLoseCard score={score} />
+  // finishGameAndDisplayView = score => <WinOrLoseCard score={score} />
+
+  onClickPlayAgain = () => {
+    this.setState({
+      score: 0,
+    })
+    this.setState(prevState => ({
+      displayEmojis: !prevState.displayEmojis,
+    }))
+  }
 
   onClickedEmoji = id => {
     const {emojisList} = this.props
     const {clickedEmojis, score, bestScore} = this.state
     const checkEmoji = clickedEmojis.includes(id)
     if (checkEmoji) {
-      this.finishGameAndDisplayView(score)
+      this.setState(prevState => ({
+        displayEmojis: !prevState.displayEmojis,
+      }))
       if (clickedEmojis.length < emojisList.length) {
-        this.setState({
-          score: 0,
-        })
         if (clickedEmojis.length > bestScore) {
           this.setState({
             bestScore: clickedEmojis.length,
@@ -63,26 +71,38 @@ class EmojiGame extends Component {
       const {emojisList} = this.props
       return emojisList.sort(() => Math.random() - 0.5)
     }
-    const {score, bestScore} = this.state
+    const {score, bestScore, displayEmojis} = this.state
     const emojisList = shuffledEmojisList()
-    return (
-      <>
-        <NavBar score={score} bestScore={bestScore} />
-        <div className="bg-container">
-          <ul className="emojis-list">
-            {emojisList.map(emoji => (
-              <EmojiCard
-                key={emoji.id}
-                id={emoji.id}
-                emojiName={emoji.emojiName}
-                emojiUrl={emoji.emojiUrl}
-                onClickedEmoji={this.onClickedEmoji}
-              />
-            ))}
-          </ul>
-        </div>
-      </>
-    )
+    const emojiDisplay = displayEmojis
+      ? 'display-emojis-list'
+      : 'dont-display-emojis-list'
+    let mainDisplay
+    if (displayEmojis === true) {
+      mainDisplay = (
+        <>
+          {' '}
+          <NavBar score={score} bestScore={bestScore} />
+          <div className="bg-container">
+            <ul className={emojiDisplay}>
+              {emojisList.map(emoji => (
+                <EmojiCard
+                  key={emoji.id}
+                  id={emoji.id}
+                  emojiName={emoji.emojiName}
+                  emojiUrl={emoji.emojiUrl}
+                  onClickedEmoji={this.onClickedEmoji}
+                />
+              ))}
+            </ul>
+          </div>
+        </>
+      )
+    } else {
+      mainDisplay = (
+        <WinOrLoseCard score={score} onClickPlayAgain={this.onClickPlayAgain} />
+      )
+    }
+    return <>{mainDisplay}</>
   }
 }
 export default EmojiGame
